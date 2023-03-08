@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Test Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Test Cases For HOME(failed)">
+    <classes>
+      <class name="ttb_AllPage.Reports">
+        <methods>
+          <include name="ReportsPage"/>
+        </methods>
+      </class> <!-- ttb_AllPage.Reports -->
+      <class name="ttb_AllPage.OnTheClock">
+        <methods>
+          <include name="OnTheClockPage"/>
+        </methods>
+      </class> <!-- ttb_AllPage.OnTheClock -->
+      <class name="ttb_AllPage.Contacts">
+        <methods>
+          <include name="ContactsPage"/>
+        </methods>
+      </class> <!-- ttb_AllPage.Contacts -->
+    </classes>
+  </test> <!-- Test Cases For HOME(failed) -->
+</suite> <!-- Failed suite [Test Suite] -->

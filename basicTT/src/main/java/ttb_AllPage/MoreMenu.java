@@ -1,0 +1,58 @@
+package ttb_AllPage;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
+
+public class MoreMenu {
+	
+	@Test
+	public void MoreMenuPage() throws InterruptedException {
+		
+		System.setProperty("webdriver.chrome.driver",
+				"D:\\drive\\automation prerequisite\\selenium drivers\\chromedriver.exe");
+
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://secure.ebillity.com/Firm4.0/Login.aspx?ReturnUrl=%2fFirm4.0%2fDashboard%2fDashboard3.aspx");
+		driver.manage().window().maximize();
+		WebElement userID = driver.findElement(By.id("txtEmail"));
+		userID.sendKeys("andttb01@mailinator.com");
+		
+		WebElement password = driver.findElement(By.id("txtPassword"));
+		password.sendKeys("Test123"+Keys.ENTER);
+		
+		Thread.sleep(500);
+		
+		try {driver.findElement(By.xpath("//*[@class='dropdown-toggle collapsed']")).click();	
+		}
+		catch (NoSuchElementException e) {}
+		
+		WebElement IntegrationsButton = driver.findElement(By.xpath("//*[@title='Integrations']"));
+		IntegrationsButton.click();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='accounting-integrati'][1]")));
+		System.out.println("Integrations Page Loaded Successfully");
+
+		WebElement AppsAndDownloadsButton = driver.findElement(By.id("mnu_sub_Downloads-home"));
+		AppsAndDownloadsButton.click();
+		WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='inner-container']")));
+		System.out.println("AppsAndDownloads Page Loaded Successfully");
+
+		WebElement APIButton = driver.findElement(By.id("mnu_sub_API"));
+		APIButton.click();
+		WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait3.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='ctl00_ContentPlaceHolder1_btnAPISave']")));
+		System.out.println("API Page Loaded Successfully");
+
+		driver.close();
+	}
+}
