@@ -1,8 +1,13 @@
-package basicTTLogin_Logout;
+package dataDriven;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Set;
 
@@ -11,13 +16,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-public class Chatgpt {
+public class User_STE_submit {
 	
 	WebDriver driver;
 
@@ -32,7 +36,7 @@ public class Chatgpt {
 		driver.manage().window().maximize();
 
 		WebElement userID = driver.findElement(By.id("txtEmail"));
-		userID.sendKeys("vpcbmar@mailinator.com ");
+		userID.sendKeys("vpclmar2@mailinator.com ");
 
 		WebElement password = driver.findElement(By.id("txtPassword"));
 		password.sendKeys("Test123");
@@ -41,12 +45,12 @@ public class Chatgpt {
 	}
 
 	@Test
-	public void STE() throws InterruptedException, AWTException {
+	public void STE() throws InterruptedException, AWTException, UnsupportedFlavorException, IOException {
 
 		WebElement createButton = driver.findElement(By.id("createTitle"));
 		createButton.click();
 
-		driver.getWindowHandle();
+		String oldWindow = driver.getWindowHandle();
 
 		WebElement timeEntryButton = driver.findElement(By.xpath("//div[@class='list']/child::a[1]"));
 		timeEntryButton.click();
@@ -55,38 +59,40 @@ public class Chatgpt {
 
 		for (String newwindow : newWindow) { driver.switchTo().window(newwindow); }
 				
-		
+		Thread.sleep(2000);
 		//select client-project
 		
-		String client_Project = "clio 04  :  tt pro4";
-							
-			new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='s2id_select2_clients']")));
-		    driver.findElement(By.xpath("//*[@id='s2id_select2_clients']")).click();
-			driver.findElement(By.xpath("//*[@id='select2-drop']/div/input")).sendKeys(client_Project);
-			new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='select2-drop']/descendant::div[contains(@class,'select2-result-label')][not(contains(text(),'Select'))]/span[contains(text(),'"+client_Project+"')]")));
-			driver.findElement(By.xpath("//*[@id='select2-drop']/descendant::div[contains(@class,'select2-result-label')][not(contains(text(),'Select'))]")).click();
+		String client = "Client POLO";
+		String project = "pro 01";
+			
+		    Thread.sleep(2000);
+			driver.findElement(By.xpath("//*[@id='s2id_select2_clients']")).click();
+			driver.findElement(By.xpath("//*[@id='select2-drop']/div/input")).sendKeys(project);
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='select2-drop']/descendant::div[contains(@class,'select2-result-label')][not(contains(text(),'Select'))][contains(text(),'"+client+"')]")).click();
 			
 		//select activity
 			
-		String Activity = "Review";
-			
+		String activity = "Review";
+		    
+		    Thread.sleep(2000);
 		    driver.findElement(By.xpath("//*[@id='s2id_select2_activities']")).click();
 		    new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='select2-drop']/descendant::ul[@class='select2-results']")));
-			Thread.sleep(1000);
-		    driver.findElement(By.xpath("//*[@id='select2-drop']/div/input")).sendKeys(Activity);
+			driver.findElement(By.xpath("//*[@id='select2-drop']/div/input")).sendKeys(activity);
+			Thread.sleep(1500);
 			driver.findElement(By.xpath("//*[@id='select2-drop']/descendant::div[contains(@class,'select2-result-label')]")).click();
 			    
 		//description
 			    
-		String dec = "";   
+		String dec = "Time entry for " + client+project;   
 			    
-			WebElement decBox = driver.findElement(By.id("invoice_description"));
-			decBox.click();
-			decBox.sendKeys(dec);
+			WebElement desBox = driver.findElement(By.id("invoice_description"));
+			desBox.click();
+			desBox.sendKeys(dec);
 			
 		//billable type
 		String h_f = "H";
-		String type = "O";
+		String type = "S";
 		
 			if(h_f.equals("H")){
 				driver.findElement(By.xpath("//*[@name='bittable_type'][@value='1']")).click();
@@ -105,9 +111,9 @@ public class Chatgpt {
 		 
 		//Select date
 		try {	
-		String day = "20";	
-		String month = "Apr";
-		String year = "2024";
+		String day = "";	
+		String month = "";
+		String year = "";
 			int givenYear = Integer.parseInt(year);
 
 
@@ -158,6 +164,23 @@ public class Chatgpt {
 	catch (Exception e) {
 		
 	}
+		Thread.sleep(2000);
+        driver.findElement(By.id("date")).click();
+		
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_A);
+		robot.keyRelease(KeyEvent.VK_A);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_C);
+		robot.keyRelease(KeyEvent.VK_C);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+	    Clipboard clipboard = toolkit.getSystemClipboard();    
+	    String copiedDate = (String) clipboard.getData(DataFlavor.stringFlavor);
+	    
 		
 		//From time
 			    
@@ -223,4 +246,80 @@ public class Chatgpt {
 		  else {}
 		 
 		 //save
-}}
+		 driver.findElement(By.id("save")).click();
+		 
+		 //close STE
+		 Thread.sleep(2000);
+
+		 
+	//submit the STE
+		 driver.switchTo().window(oldWindow); 
+		try {
+			driver.findElement(By.xpath("//a[@id='mnu_entries-home'][@aria-expanded='false']")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		driver.findElement(By.xpath("//a[@title='Manage My Entries']")).click();
+		
+		WebElement findButton = driver.findElement(By.xpath("//*[@class='ctrl_btn'][@value='Find']"));
+		findButton.click();
+		
+		Thread.sleep(2000);
+		//find client
+		WebElement clientdrop = driver.findElement(By.xpath("//*[contains(@id,'ddlClients')]/following::span[@class='select2-selection__arrow'][@role='presentation'][1]"));
+		clientdrop.click();
+		
+		WebElement searchbox1 =driver.findElement(By.className("select2-search__field"));
+		searchbox1.click();
+		searchbox1.sendKeys(client);
+		
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@class='select2-results__option multi-checkboxes_wrap']")).click();
+		
+		// find project
+		WebElement projectdrop = driver.findElement(By.xpath("//*[contains(@id,'ddlProjects')]/following::span[@class='select2-selection__arrow'][@role='presentation'][1]"));
+		projectdrop.click();
+					
+		WebElement searchbox2 =driver.findElement(By.className("select2-search__field"));
+		searchbox2.click();
+		searchbox2.sendKeys(project);
+		
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@class='select2-results__option multi-checkboxes_wrap']")).click();
+		
+		//find activity
+		WebElement activitydrop = driver.findElement(By.xpath("//*[contains(@id,'ddlActivityType')]/following::span[@class='select2-selection__arrow'][@role='presentation'][1]"));
+		activitydrop.click();
+		
+		WebElement searchbox3 =driver.findElement(By.className("select2-search__field"));
+		searchbox3.click();
+		searchbox3.sendKeys(activity);
+		
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@class='select2-results__option multi-checkboxes_wrap']")).click();
+		
+		//to date
+		WebElement todate = driver.findElement(By.id("txtTo_DateRange"));
+		todate.clear();
+		todate.sendKeys(copiedDate);
+		
+		
+		//from date
+		WebElement fromdate = driver.findElement(By.id("txtFrom_DateRange"));
+		fromdate.clear();
+		fromdate.sendKeys(copiedDate);
+		
+		Thread.sleep(2000);
+		//search button
+		driver.findElement(By.id("grdMyEntries_Search")).click();
+		
+		WebElement pendingRowCheckBox = driver.findElement(By.xpath("//*[@rowid='0']//child::input"));
+		pendingRowCheckBox.click();
+	
+		WebElement entrySubmitButton = driver.findElement(By.id("submitButton"));
+		entrySubmitButton.click();
+					
+		
+}
+}

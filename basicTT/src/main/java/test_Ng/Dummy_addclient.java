@@ -10,86 +10,71 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import jxl.Sheet;
+import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 public class Dummy_addclient {
 	WebDriver driver;
-	
-	String [][] data=null;
-	
-	@DataProvider(name="clientName")
-	  public String[][] loginProvider() throws BiffException, IOException 
-	  {
-		data = getexcelDATA();
-		return data;
-		  
-	  } 
-	
-	 public String[][] getexcelDATA() throws IOException {
-		 
-		 FileInputStream fis = new FileInputStream("D:\\drive\\selenium excel files\\excelPOI.xlsx"); 
-		 XSSFWorkbook wb = new XSSFWorkbook(fis);
-		 XSSFSheet sheet = wb.getSheetAt(0);
-		 int rowCount = sheet.getLastRowNum();
-		 for (int i = 0; i <= rowCount; i++) {
-			 XSSFRow row = sheet.getRow(i);
-			 int cellCount = row.getLastCellNum();
-			 for (int j = 0; j < cellCount; j++) {
-				 XSSFCell cell = row.getCell(j);
-				 DataFormatter formatter = new DataFormatter();
-				 String cellValue = formatter.formatCellValue(cell);				 
-			 }
-		 }
-		 return cellValue; 
-	 }
-	
-	
-	@BeforeTest
+	 @BeforeTest
 	 public void login() {
 	    System.setProperty("webdriver.chrome.driver",
 				"D:\\drive\\automation prerequisite\\selenium drivers\\chromedriver.exe");
-	    driver = new ChromeDriver();
-		driver.get("https://secure.ebillity.com/Firm4.0/Login.aspx?ReturnUrl=%2fFirm4.0%2fDashboard%2fDashboard3.aspx");
+	    ChromeOptions co = new ChromeOptions();
+	    co.addArguments("--remote-allow-origins=*");
+		driver = new ChromeDriver(co);
+		driver.get("https://secure.ebillity.com/web/Session/New");
 		driver.manage().window().maximize();
 		
 		WebElement userID = driver.findElement(By.id("txtEmail"));
-		userID.sendKeys("andttb01@mailinator.com ");
+		userID.sendKeys("andttb01@mailinator.com");
 		
 		WebElement password = driver.findElement(By.id("txtPassword"));
 		password.sendKeys("Test123");
 		WebElement submitButton = driver.findElement(By.xpath("//*[@type='submit']"));
 		submitButton.click();
 	 }
-	
+		  
 	
 	@Test
-	public void AddCustomerPerson()  {
+	public void AddCustomerPerson() throws InterruptedException  {
+		
+		String p_o = "O";
+		
+		try {driver.findElement(By.xpath("//*[@class='nav-bar-collapsed']")).click();	
+		}
+		catch (NoSuchElementException e) {
+		
+		}
 		
 		WebElement customerButton = driver.findElement(By.id("mnu_client-home"));
 		customerButton.click();
 		
-		WebElement addCustomer = driver.findElement(By.id("addClient"));
+		WebElement addCustomer = driver.findElement(By.xpath("//*[@class=\'ctrl_btn orange large add-client\']"));
 		addCustomer.click();
 		
-		WebElement firstName = driver.findElement(By.id("txtFirstName"));
-		firstName.sendKeys("fName");
+		WebElement customerTypeDropDown = driver.findElement(By.xpath("//*[@id='select2-ddlClientType_Cd-container']/following::span[@class='select2-selection__arrow'][@role='presentation'][1]"));
+		customerTypeDropDown.click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='select2-ddlClientType_Cd-results']/child::li[contains(text(),'"+p_o+"')]")).click();
 		
-		WebElement middleName = driver.findElement(By.id("txtMiddleName"));
-		middleName.sendKeys("mName");
-		
-		WebElement lastName = driver.findElement(By.id("txtLastName"));
-		lastName.sendKeys("lName");
-		
-		//WebElement save = driver.findElement(By.name("ctl00$ContentPlaceHolder1$saveClientImageButton"));
-		//save.click();
 		
 	}
-
+	
+	/*
+	 * @AfterTest public void logout() {
+	 * 
+	 * WebElement logout = driver.findElement(By.id("signout")); logout.click();
+	 * driver.close(); }
+	 */
 }

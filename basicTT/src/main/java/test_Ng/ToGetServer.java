@@ -1,29 +1,34 @@
 package test_Ng;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 public class ToGetServer {
 	WebDriver driver;
+	
 	@Test
 	public void serverNumber () throws InterruptedException {
 		
 		System.setProperty("webdriver.chrome.driver",
 				"D:\\drive\\automation prerequisite\\selenium drivers\\chromedriver.exe");
-	    driver = new ChromeDriver();
-		driver.get("https://secure.ebillity.com");
+		ChromeOptions co = new ChromeOptions();
+	    co.addArguments("--remote-allow-origins=*");
+		driver = new ChromeDriver(co);
+	    driver.get("https://secure.ebillity.com");
 		
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		
-		String email = "andttb01@mailinator.com ";
-		String pword = "Test123";
+	String email = "vpcbmar@mailinator.com";
+	String pword = "Test123";
 		
 			  WebElement userID = driver.findElement(By.id("txtEmail"));
 			  userID.sendKeys(email);
@@ -33,17 +38,17 @@ public class ToGetServer {
 			  WebElement submitButton = driver.findElement(By.xpath("//*[@type='submit']"));
 			  submitButton.click(); 
 			 
-		String expectedServer = "Server 7V";
-			  
-		
+	String expectedServer = "Server 11V";
+			 
+	
 			  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class=\"paddingLeft5 paddingRight5\"]")));	  
 			 				 
 			  while (!driver.findElement(By.xpath("//*[@class=\"paddingLeft5 paddingRight5\"]")).getText().equals(expectedServer)) {
-					WebElement logout = driver.findElement(By.id("signout"));
-					logout.click();
-					  
-					Thread.sleep(500);
-					  
+					
+					WebElement logout = driver.findElement(By.id("signout")); logout.click();
+					 
+					Thread.sleep(100);
+										  
 					driver.manage().deleteAllCookies();
 					driver.navigate().refresh();
 										

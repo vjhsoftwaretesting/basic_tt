@@ -72,7 +72,7 @@ public class TTB_MTE_Billable {
 
 
 	@Test(dataProvider = "clientName")
-	   public void AddProject_projectID (String pro_Name, String cli_Name, String activity, String month, String day, String inTime, String outTime) throws InterruptedException  {
+	   public void MTE (String pro_Name, String cli_Name, String activity, String month, String day, String inTime, String outTime) throws InterruptedException  {
 					
 
 		Thread.sleep(1000);
@@ -92,8 +92,7 @@ public class TTB_MTE_Billable {
 			 
 		Thread.sleep(1000);
 			  
-			  
-		WebElement clientDropDown = driver.findElement(By.xpath("//*[@id='s2id_select2_clients']"));
+		WebElement clientDropDown = driver.findElement(By.id("s2id_select2_clients"));
 		clientDropDown.click();
 					  
 		WebElement clientsearchBox = driver.findElement(By.xpath("//*[@id='select2-drop']/div/input"));

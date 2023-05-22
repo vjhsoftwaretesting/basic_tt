@@ -25,15 +25,12 @@ public class TTB_AddClientPerson {
 	  {
 		data = getexcelDATA();
 		return data;
-		  
-	  } 
-	  
-	  
+		} 
+	  	  
 	  public String[][] getexcelDATA() throws BiffException, IOException
 	  {
 		  FileInputStream excel = new FileInputStream("D:\\drive\\selenium excel files\\TTB client,organisation names.xls");
-		  Workbook workbook = Workbook.getWorkbook(excel)
-	;	  	   
+		  Workbook workbook = Workbook.getWorkbook(excel);	  	   
 		  Sheet sheet = workbook.getSheet(0);
 		  int rowcount = sheet.getRows();
 		  int columncount = sheet.getColumns();
@@ -66,25 +63,27 @@ public class TTB_AddClientPerson {
 		WebElement submitButton = driver.findElement(By.xpath("//*[@type='submit']"));
 		submitButton.click();
 	 }
-	  
-	  
+		  
 	
-	@Test(dataProvider = "clientName")
-	public void AddCustomerPerson(String fName, String lName)  {
+	@Test(dataProvider ="clientName")
+	public void AddCustomerPerson(String fName,String mName,String lName)  {
 		
 		WebElement customerButton = driver.findElement(By.id("mnu_client-home"));
 		customerButton.click();
 		
-		WebElement addCustomer = driver.findElement(By.xpath("//*[@class=\'ctrl_btn orange large add-client\']"));
+		WebElement addCustomer = driver.findElement(By.id("addClient"));
 		addCustomer.click();
 		
-		WebElement firstName = driver.findElement(By.name("ctl00$ContentPlaceHolder1$clientFNameTextBoxWithValidator$textBoxValue"));
+		WebElement firstName = driver.findElement(By.id("txtFirstName"));
 		firstName.sendKeys(fName);
 		
-		WebElement lastName = driver.findElement(By.id("ctl00_ContentPlaceHolder1_clientLNameTextBoxWithValidator_textBoxValue"));
+		WebElement middleName = driver.findElement(By.id("txtMiddleName"));
+		middleName.sendKeys(mName);
+				
+		WebElement lastName = driver.findElement(By.id("txtLastName"));
 		lastName.sendKeys(lName);
 		
-		WebElement save = driver.findElement(By.name("ctl00$ContentPlaceHolder1$saveClientImageButton"));
+		WebElement save = driver.findElement(By.id("save_CloseClient"));
 		save.click();
 		
 	}

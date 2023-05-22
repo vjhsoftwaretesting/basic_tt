@@ -79,20 +79,20 @@ public class TTB_AddProjectWithDescription {
 			WebElement ProjectsButton = driver.findElement(By.id("mnu_project-home"));
 			ProjectsButton.click();
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='page-title']")));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='ctrl_btn orange large add-project']")));
 			System.out.println("Projects Page Loaded Successfully");
 
 			WebElement addProjectButton = driver.findElement(By.xpath("//*[@class='ctrl_btn orange large add-project']"));
 			addProjectButton.click();
 			 
-			WebElement clientDropDown = driver.findElement(By.xpath("//*[@class='select2-choice select2-default']"));
+			WebElement clientDropDown = driver.findElement(By.id("select2-ddlClient_pd-container"));
 			clientDropDown.click(); 
 							
-			driver.findElement(By.id("s2id_autogen1_search")).sendKeys(cli_org_Name);
+			driver.findElement(By.className("select2-search__field")).sendKeys(cli_org_Name);
 			
-			Thread.sleep(300);
+			Thread.sleep(1000);
 			 
-			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='select2-results']"));
+			List<WebElement> allOptions = driver.findElements(By.id("select2-ddlClient_pd-results"));
 		    for (int i = 0; i <= allOptions.size(); i++) {
 					System.out.println(allOptions.get(i).getText());
 			    if (allOptions.get(i).getText().contains(cli_org_Name)) {
@@ -102,14 +102,14 @@ public class TTB_AddProjectWithDescription {
 					}
 			        }
 		    
-			WebElement projectName = driver.findElement(By.id("ctl00_ContentPlaceHolder1_projectNameTextBoxWithValidator_textBoxValue"));
+			WebElement projectName = driver.findElement(By.id("txtProjectName_pd"));
 			projectName.sendKeys(proName);
 			
-			WebElement projectDescription = driver.findElement(By.xpath("//*[@id='ctl00_ContentPlaceHolder1_projectDescriptionTextBox']"));
+			WebElement projectDescription = driver.findElement(By.id("txtDescription_pd"));
 			projectDescription.sendKeys("The Project-'"+proName+"'is created");
 			
 			
-		    WebElement save = driver.findElement(By.id("ctl00_ContentPlaceHolder1_saveProjectImageButton"));
+		    WebElement save = driver.findElement(By.id("save_CloseProject"));
 			save.click();
 			 		
 	        }

@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-03-07T21:16:09 IST" name="Default suite" finished-at="2023-03-07T21:20:57 IST" duration-ms="288380">
+  <suite started-at="2023-05-16T15:30:38 IST" name="Default suite" finished-at="2023-05-16T15:31:26 IST" duration-ms="47592">
     <groups>
     </groups>
-    <test started-at="2023-03-07T21:16:09 IST" name="Default test" finished-at="2023-03-07T21:20:57 IST" duration-ms="288380">
+    <test started-at="2023-05-16T15:30:38 IST" name="Default test" finished-at="2023-05-16T15:31:26 IST" duration-ms="47592">
       <class name="test_Ng.ToGetServer">
-        <test-method signature="serverNumber()[pri:0, instance:test_Ng.ToGetServer@72057ecf]" started-at="2023-03-07T21:16:09 IST" name="serverNumber" finished-at="2023-03-07T21:20:57 IST" duration-ms="288315" status="PASS">
+        <test-method signature="serverNumber()[pri:0, instance:test_Ng.ToGetServer@72057ecf]" started-at="2023-05-16T15:30:38 IST" name="serverNumber" finished-at="2023-05-16T15:31:26 IST" duration-ms="47512" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- serverNumber -->
